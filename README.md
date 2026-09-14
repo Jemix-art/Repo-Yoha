@@ -51,4 +51,3 @@ enlaces no resuelven rutas relativas y la vista previa saldría sin imagen.
 ## Pendiente
 
 - El botón de confirmación está deshabilitado (`data-confirm-url=""`).
-- La mesa de regalos no tiene datos todavía.

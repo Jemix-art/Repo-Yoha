@@ -163,6 +163,41 @@
     }, FLAP_MS);
   }
 
+  // Copiar la cuenta evita que nadie transcriba diez digitos a mano.
+  const botonCopia = document.getElementById("copiar-cuenta");
+  const estadoCopia = document.getElementById("estado-copia");
+  if (botonCopia) {
+    const etiqueta = botonCopia.querySelector(".copiar-texto");
+    const original = etiqueta.textContent;
+    let vuelta = null;
+    botonCopia.addEventListener("click", async () => {
+      const numero = botonCopia.dataset.cuenta;
+      let bien = false;
+      try {
+        await navigator.clipboard.writeText(numero);
+        bien = true;
+      } catch {
+        // Sin permiso de portapapeles: seleccionamos el numero para copiarlo a mano.
+        const nodo = document.getElementById("numero-cuenta");
+        if (nodo) {
+          const rango = document.createRange();
+          rango.selectNodeContents(nodo);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(rango);
+        }
+      }
+      etiqueta.textContent = bien ? "Copiado" : "Selecciónalo y cópialo";
+      botonCopia.dataset.copiado = String(bien);
+      if (estadoCopia) estadoCopia.textContent = bien ? "Número de cuenta copiado." : "Número seleccionado; cópialo manualmente.";
+      window.clearTimeout(vuelta);
+      vuelta = window.setTimeout(() => {
+        etiqueta.textContent = original;
+        botonCopia.removeAttribute("data-copiado");
+      }, 2600);
+    });
+  }
+
   seal.addEventListener("click", openInvitation);
 
   function onMotionPreferenceChange(event) {

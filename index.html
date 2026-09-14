@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#64293f">
+  <!-- La invitacion se reparte por enlace, no se busca. Y lleva datos
+       bancarios: no queremos que acaben en resultados de busqueda. -->
+  <meta name="robots" content="noindex, nofollow">
   <meta name="description"
     content="Invitación de boda de Yohana y José Luis para el Sr. Jordán Román. Guardamos un lugar a tu nombre.">
   <title>Yohana &amp; José Luis · Nuestra boda</title>
@@ -221,7 +224,22 @@
         <section class="letter-section seccion-practica" aria-labelledby="regalos">
           <h2 id="regalos">Mesa de regalos</h2>
           <p>Que vengas ya nos alcanza. Si aun así quieres tener un detalle con nosotros, aquí te dejamos los datos.</p>
-          <p class="action-note">Todavía estamos afinando esto. Te contamos pronto.</p>
+          <div class="cuenta">
+            <p class="cuenta-banco">Banco de Loja</p>
+            <dl class="cuenta-datos">
+              <dt>Titular</dt><dd>José Luis Encarnación</dd>
+              <dt>Cuenta</dt><dd><span id="numero-cuenta">2901610031</span></dd>
+              <dt>Cédula</dt><dd>1104434491</dd>
+            </dl>
+          </div>
+          <button class="button" id="copiar-cuenta" type="button" data-cuenta="2901610031">
+            <svg class="icon-copy" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <rect x="5.5" y="5.5" width="8" height="8" rx="1.4" />
+              <path d="M10.5 3.5v-1a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1" />
+            </svg>
+            <span class="copiar-texto">Copiar número de cuenta</span>
+          </button>
+          <p class="sr-only" id="estado-copia" role="status" aria-live="polite"></p>
         </section>
 
         <hr class="beat" aria-hidden="true">

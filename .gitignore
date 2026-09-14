@@ -55,3 +55,6 @@ Desktop.ini
 # Intermedios de generacion (la mascara va incrustada en el CSS)
 /img/generados/deckle-*.png
 /img/generados/deckle-*.txt
+
+# Capturas de WhatsApp usadas como fuente (los datos ya estan en el HTML)
+WhatsApp Image *
