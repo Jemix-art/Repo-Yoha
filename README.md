@@ -38,10 +38,15 @@ de 16. Bajarlo lo devuelve a resultar pequeño en móvil.
 
 **Sin JavaScript la carta se muestra entera**, no un sobre que no abre.
 
-## Al publicar
+## Publicado en
 
-En `index.html`, cambiar `og:image` por la URL absoluta y descomentar `og:url`.
-WhatsApp no resuelve rutas relativas y la vista previa saldría sin imagen.
+https://jemix-art.github.io/repo-yoha/
+
+Las etiquetas `og:image` y `og:url` apuntan ahí de forma absoluta. Si el sitio
+cambia de dominio, hay que actualizarlas en `index.html`: los raspadores de
+enlaces no resuelven rutas relativas y la vista previa saldría sin imagen.
+
+`.nojekyll` evita que GitHub procese el sitio con Jekyll.
 
 ## Pendiente
 
