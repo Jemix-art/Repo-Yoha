@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Dos anillos: legible a 16 px y sin depender de ninguna tipografia.
+       Centros separados 20 u. para que el cruce sea corto; con mas solape el
+       anillo de delante corta un arco demasiado largo del de atras. -->
+  <rect width="64" height="64" rx="14" fill="#64293f"/>
+  <circle cx="23" cy="33" r="11.5" fill="none" stroke="#d9a94e" stroke-width="4.2"/>
+  <circle cx="43" cy="31" r="11.5" fill="none" stroke="#64293f" stroke-width="6.6"/>
+  <circle cx="43" cy="31" r="11.5" fill="none" stroke="#d9a94e" stroke-width="4.2"/>
+</svg>

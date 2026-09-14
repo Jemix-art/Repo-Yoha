@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#64293f">
+  <meta name="description"
+    content="Invitación de boda de Yohana y José Luis para el Sr. Jordán Román. Guardamos un lugar a tu nombre.">
+  <title>Yohana &amp; José Luis · Nuestra boda</title>
+
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+  <!-- Vista previa al compartir por WhatsApp.
+       IMPORTANTE: al publicarla, cambia las dos rutas de imagen por la URL
+       absoluta (https://tu-dominio/img/og-card.jpg) y descomenta og:url.
+       WhatsApp no resuelve rutas relativas y se quedaria sin foto. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_EC">
+  <meta property="og:site_name" content="Yohana &amp; José Luis">
+  <meta property="og:title" content="Yohana &amp; José Luis · 10 de octubre de 2026">
+  <meta property="og:description" content="Nos casamos en Loja y guardamos un lugar a tu nombre. Abre la invitación.">
+  <meta property="og:image" content="img/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Yohana y José Luis, 10 de octubre de 2026, Loja, Ecuador">
+  <!-- <meta property="og:url" content="https://tu-dominio/"> -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yohana &amp; José Luis · 10 de octubre de 2026">
+  <meta name="twitter:description" content="Nos casamos en Loja y guardamos un lugar a tu nombre. Abre la invitación.">
+  <meta name="twitter:image" content="img/og-card.jpg">
+  <link rel="preload" href="fonts/cormorant-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/greatvibes-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body data-state="open">
+  <section class="opening" id="apertura" aria-label="Abrir la invitación" hidden>
+    <div class="opening-heading">
+      <p class="opening-names">Yohana <span>&amp;</span> José Luis</p>
+    </div>
+
+    <div class="envelope-stage">
+      <span class="envelope-floral" aria-hidden="true"></span>
+      <div class="envelope" id="sobre">
+        <div class="envelope-back" aria-hidden="true"></div>
+        <div class="letter-peek" id="carta-interior" aria-hidden="true">
+          <span>Y <i>&amp;</i> J</span>
+        </div>
+        <div class="envelope-pocket" aria-hidden="true"></div>
+        <div class="envelope-flap" id="solapa" aria-hidden="true"></div>
+        <button class="seal-button" id="abrir-invitacion" type="button"
+          aria-label="Abrir la invitación de Yohana y José Luis" aria-controls="carta" aria-expanded="false"
+          aria-describedby="instruccion">
+
+          <span class="seal-monogram" aria-hidden="true">Y<span>&amp;</span>J</span>
+        </button>
+        <p class="envelope-addressee">Sr. Jordán Román</p>
+      </div>
+    </div>
+
+    <div class="opening-footer">
+      <p id="instruccion">Toca para abrir</p>
+      <span class="fine-rule" aria-hidden="true"></span>
+      <p class="opening-note">Una carta para ti</p>
+    </div>
+  </section>
+
+  <main class="invitation" id="carta" aria-labelledby="nombres">
+    <article class="paper">
+      <div id="textura-papel" aria-hidden="true"></div>
+      <span class="paper-corner corner-top-left" aria-hidden="true"></span>
+      <span class="paper-corner corner-top-right" aria-hidden="true"></span>
+      <span class="paper-corner corner-bottom-left" aria-hidden="true"></span>
+      <span class="paper-corner corner-bottom-right" aria-hidden="true"></span>
+      <div class="paper-content">
+        <header class="letter-header" id="inicio">
+          <p class="honor">Tenemos el honor de invitarte</p>
+          <div class="botanical-mark" aria-hidden="true">
+            <svg viewBox="0 0 120 86" fill="none">
+              <path d="M60 78C44 57 36 32 44 8M60 78C71 58 82 32 76 8M60 78V34" />
+              <path
+                d="M43 27C25 25 27 12 30 10C42 13 47 20 43 27ZM43 44C25 45 20 33 22 29C36 29 42 35 43 44ZM51 62C33 66 28 55 29 51C43 49 50 55 51 62ZM77 27C95 25 93 12 90 10C78 13 73 20 77 27ZM77 44C95 45 100 33 98 29C84 29 78 35 77 44ZM69 62C87 66 92 55 91 51C77 49 70 55 69 62ZM60 36C49 27 55 18 60 15C65 18 71 27 60 36Z" />
+            </svg>
+          </div>
+          <h1 id="nombres" tabindex="-1">Yohana <span class="ampersand">&amp;</span> José Luis</h1>
+          <figure class="photo photo-header">
+            <picture>
+              <source srcset="img/2.webp" type="image/webp">
+              <img src="img/2.png" alt="Nuestras manos y el anillo de compromiso" width="1440" height="1092"
+                fetchpriority="high" decoding="async">
+            </picture>
+          </figure>
+          <p class="wedding-date"><time datetime="2026-10-10">Sábado 10 de octubre de 2026</time></p>
+          <p class="wedding-city">Loja, Ecuador</p>
+          <div class="countdown" role="group" aria-label="Tiempo hasta la ceremonia">
+            <span><strong id="countdown-days">—</strong><small>Días</small></span>
+            <span><strong id="countdown-hours">—</strong><small>Horas</small></span>
+            <span><strong id="countdown-minutes">—</strong><small>Minutos</small></span>
+          </div>
+          <noscript>
+            <p class="action-note">La ceremonia comienza a las 5:00 PM.</p>
+          </noscript>
+        </header>
+        <div class="ornament" aria-hidden="true"></div>
+
+        <section class="letter-section dedication seccion-solemne" aria-labelledby="dedicatoria">
+          <h2 id="dedicatoria">Sr. Jordán Román</h2>
+          <p class="invitation-phrase">Guardamos un lugar<br><strong>1 pase</strong><br>a tu nombre.</p>
+        </section>
+
+        <div class="ornament" aria-hidden="true"></div>
+
+        <section class="letter-section invitation-story" aria-labelledby="historia">
+          <h2 id="historia">La invitación</h2>
+          <p>Nuestra historia no empieza el 10 de octubre. Empezó hace años, sin testigos ni ceremonia, y fue creciendo
+            hasta llenarse de lo que más queremos: nuestros hijos. Lo que falta es decirlo en voz alta, delante de la
+            gente que nos importa.</p>
+          <figure class="photo photo-proposal">
+            <picture>
+              <source srcset="img/1.webp" type="image/webp">
+              <img src="img/1.png" alt="La pedida de mano de Yohana y José Luis" width="1408" height="1117"
+                loading="lazy" decoding="async">
+            </picture>
+          </figure>
+          <div class="family-blessing">
+            <p>Con la bendición de Dios y de nuestros padres:</p>
+            <ul class="family-names">
+              <li>María del Carmen Paladines</li>
+              <li>José Pedro Román</li>
+              <li>Margarita Sofía Encarnación</li>
+            </ul>
+            <p>Y en compañía de nuestros padrinos:</p>
+            <ul class="family-names">
+              <li>Luz Encarnación</li>
+              <li>Franco Román</li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="ornament" aria-hidden="true"></div>
+
+        <section class="letter-section location-section section-ceremonia" aria-labelledby="ceremonia">
+          <h2 id="ceremonia">Ceremonia</h2>
+          <p>Podríamos casarnos solos, pero no sería lo mismo. Queremos mirar alrededor ese día y encontrarte ahí.</p>
+          <figure class="photo photo-ceremony">
+            <picture>
+              <source srcset="img/3.webp" type="image/webp">
+              <img src="img/3.png" alt="José Luis de rodillas ante Yohana con rosas blancas" width="1024" height="1536"
+                loading="lazy" decoding="async">
+            </picture>
+          </figure>
+          <p class="event-time"><time datetime="2026-10-10T17:00:00-05:00">5:00 PM</time></p>
+          <h3>Iglesia Inmaculada Concepción</h3>
+          <p class="address">El Pedestal, Calle Eplicachima 07-59 y Mayas</p>
+          <a class="button" id="mapa-ceremonia" href="https://maps.app.goo.gl/BFVAUgi1sA2GJaox5" target="_blank"
+            rel="noopener noreferrer">Ver en Google Maps <svg class="icon-ext" viewBox="0 0 16 16" aria-hidden="true"
+              focusable="false">
+              <path d="M6 3h7v7" />
+              <path d="M13 3 4.5 11.5" />
+            </svg></a>
+        </section>
+
+        <hr class="beat" aria-hidden="true">
+
+        <section class="letter-section location-section" aria-labelledby="recepcion">
+          <h2 id="recepcion">Recepción</h2>
+          <h3>Restaurante Cecilia</h3>
+          <p class="address">Ciudadela Nueva Granada, Francisco Robles 08-38 y García Mor</p>
+          <a class="button" id="mapa-recepcion" href="https://maps.app.goo.gl/u83aA4Y2eSKZQvDaA" target="_blank"
+            rel="noopener noreferrer">Ver en Google Maps <svg class="icon-ext" viewBox="0 0 16 16" aria-hidden="true"
+              focusable="false">
+              <path d="M6 3h7v7" />
+              <path d="M13 3 4.5 11.5" />
+            </svg></a>
+        </section>
+
+        <hr class="beat" aria-hidden="true">
+
+        <section class="letter-section itinerary-section" aria-labelledby="itinerario">
+          <h2 id="itinerario">Itinerario</h2>
+          <figure class="photo photo-portrait">
+            <picture>
+              <source srcset="img/4.webp" type="image/webp">
+              <img src="img/4.png" alt="Retrato de Yohana y José Luis" width="1024" height="1536" loading="lazy"
+                decoding="async">
+            </picture>
+          </figure>
+          <ol class="timeline">
+            <li>
+              <p class="timeline-time"><time datetime="2026-10-10T17:00:00-05:00">17:00</time></p>
+              <h3>Ceremonia</h3>
+            </li>
+            <li>
+              <p class="timeline-time"><time datetime="2026-10-10T18:00:00-05:00">18:00</time></p>
+              <h3>Sesión de fotos</h3>
+            </li>
+            <li>
+              <p class="timeline-time"><time datetime="2026-10-10T19:00:00-05:00">19:00</time></p>
+              <h3>Brindis</h3>
+            </li>
+            <li>
+              <p class="timeline-time"><time datetime="2026-10-10T19:30:00-05:00">19:30</time></p>
+              <h3>Cena</h3>
+            </li>
+            <li>
+              <p class="timeline-time"><time datetime="2026-10-10T20:30:00-05:00">20:30</time></p>
+              <h3>Primer vals de los novios</h3>
+            </li>
+            <li>
+              <p class="timeline-time"><time datetime="2026-10-10T21:00:00-05:00">21:00</time></p>
+              <h3>Baile</h3>
+            </li>
+          </ol>
+        </section>
+
+        <div class="ornament" aria-hidden="true"></div>
+
+        <section class="letter-section seccion-practica" aria-labelledby="regalos">
+          <h2 id="regalos">Mesa de regalos</h2>
+          <p>Que vengas ya nos alcanza. Si aun así quieres tener un detalle con nosotros, aquí te dejamos los datos.</p>
+          <p class="action-note">Todavía estamos afinando esto. Te contamos pronto.</p>
+        </section>
+
+        <hr class="beat" aria-hidden="true">
+
+        <section class="letter-section rsvp seccion-practica" aria-labelledby="confirmacion">
+          <h2 id="confirmacion">Confirmación</h2>
+          <p class="rsvp-guest">Sr. Jordán Román <span aria-hidden="true">·</span> 1 pase</p>
+          <p>Necesitamos saber cuántos seremos para que no falte lugar en la mesa. Cuéntanos antes del 24 de septiembre.
+          </p>
+          <button class="button button-primary" id="confirmar-asistencia" type="button" disabled data-confirm-url=""
+            aria-disabled="true" aria-describedby="confirmacion-pendiente">Confirmar asistencia</button>
+          <p class="action-note" id="confirmacion-pendiente">Te mandamos el enlace por aparte.</p>
+        </section>
+
+        <div class="ornament" aria-hidden="true"></div>
+
+        <footer class="letter-footer">
+          <figure class="photo photo-family">
+            <picture>
+              <source srcset="img/5.webp" type="image/webp">
+              <img src="img/5.png" alt="Yohana y José Luis junto a sus dos hijos" width="1024" height="1536"
+                loading="lazy" decoding="async">
+            </picture>
+          </figure>
+          <h2>Te esperamos.</h2>
+          <p class="closing-names">Yohana <span>&amp;</span> José Luis</p>
+          <a class="back-to-top" href="#inicio">Volver al inicio <svg class="icon-up" viewBox="0 0 16 16"
+              aria-hidden="true" focusable="false">
+              <path d="M8 13V3" />
+              <path d="M3.5 7.5 8 3l4.5 4.5" />
+            </svg></a>
+        </footer>
+      </div>
+    </article>
+  </main>
+  <audio id="musica" src="mp3/musica.mp3" preload="none" loop
+    aria-label="Caminar De Tu Mano, Rio Roma featuring Fonseca"></audio>
+  <button class="music-toggle" id="musica-toggle" type="button" aria-label="Activar música" aria-pressed="false"
+    data-active="false" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+      stroke-linejoin="round" aria-hidden="true">
+      <path d="M11 4 5 9H2v6h3l6 5Z" />
+      <g class="sound-on">
+        <path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14" />
+      </g>
+      <g class="sound-off">
+        <path d="m16 9 6 6m0-6-6 6" />
+      </g>
+    </svg>
+    <span class="music-label">Activar música</span>
+  </button>
+  <p class="sr-only" id="estado-musica" role="status" aria-live="polite"></p>
+  <p class="sr-only" id="estado-apertura" role="status" aria-live="polite"></p>
+</body>
+
+</html>

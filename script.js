@@ -1,0 +1,193 @@
+"use strict";
+
+(() => {
+  const body = document.body;
+  const opening = document.getElementById("apertura");
+  const seal = document.getElementById("abrir-invitacion");
+  const letter = document.getElementById("carta");
+  const letterInside = document.getElementById("carta-interior");
+  const paper = letter?.querySelector(".paper");
+  const heading = document.getElementById("nombres");
+  const status = document.getElementById("estado-apertura");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const FLAP_MS = 700;
+  const LETTER_MS = 900;
+  let phaseTimer = null;
+
+
+  // Ecuador: UTC-5 fijo. El instante no depende de la zona horaria del visitante.
+  const weddingTime = new Date("2026-10-10T17:00:00-05:00").getTime();
+  const days = document.getElementById("countdown-days");
+  const hours = document.getElementById("countdown-hours");
+  const minutes = document.getElementById("countdown-minutes");
+  function updateCountdown() {
+    const remaining = Math.max(0, weddingTime - Date.now());
+    if (days) days.textContent = String(Math.floor(remaining / 86400000)).padStart(2, "0");
+    if (hours) hours.textContent = String(Math.floor(remaining / 3600000) % 24).padStart(2, "0");
+    if (minutes) minutes.textContent = String(Math.floor(remaining / 60000) % 60).padStart(2, "0");
+  }
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
+  document.addEventListener("visibilitychange", updateCountdown);
+
+  const audio = document.getElementById("musica");
+  const musicButton = document.getElementById("musica-toggle");
+  const musicStatus = document.getElementById("estado-musica");
+  const MUSIC_KEY = "wedding-music-muted";
+  const LISTENING_VOLUME = 0.7;
+  let visitorMuted = false;
+  let fadeFrame = 0;
+  let playbackVersion = 0;
+  try { visitorMuted = localStorage.getItem(MUSIC_KEY) === "true"; }
+  catch { /* La música funciona también si el almacenamiento está bloqueado. */ }
+
+  function updateMusicButton() {
+    if (!audio || !musicButton) return;
+    const active = !audio.paused && !audio.muted && !visitorMuted;
+    musicButton.dataset.active = String(active);
+    musicButton.setAttribute("aria-pressed", String(active));
+    const label = active ? "Silenciar música" : "Activar música";
+    musicButton.setAttribute("aria-label", label);
+    musicButton.querySelector(".music-label").textContent = label;
+  }
+  function saveMusicChoice(muted) {
+    visitorMuted = muted;
+    try { localStorage.setItem(MUSIC_KEY, String(muted)); }
+    catch { /* Preferencia conservada en memoria durante esta visita. */ }
+  }
+  function preparePlayback() {
+    playbackVersion += 1;
+    window.cancelAnimationFrame(fadeFrame);
+    audio.muted = false;
+    audio.volume = 0;
+    if (musicStatus) musicStatus.textContent = "";
+  }
+  function playbackFailed(version) {
+    if (version !== playbackVersion) return;
+    window.cancelAnimationFrame(fadeFrame);
+    audio.pause();
+    audio.muted = true;
+    updateMusicButton();
+    if (musicStatus) musicStatus.textContent = "La música no pudo iniciarse. Puedes intentarlo con el botón Activar música.";
+  }
+  function handlePlayback(playResult, version) {
+    Promise.resolve(playResult).then(() => {
+      if (version !== playbackVersion || visitorMuted || audio.paused) return;
+      updateMusicButton();
+      const start = performance.now();
+      function fadeIn(now) {
+        if (version !== playbackVersion || visitorMuted || audio.paused) return;
+        const progress = Math.min(1, (now - start) / 2400);
+        audio.volume = LISTENING_VOLUME * progress;
+        if (progress < 1) fadeFrame = window.requestAnimationFrame(fadeIn);
+      }
+      fadeFrame = window.requestAnimationFrame(fadeIn);
+    }).catch(() => playbackFailed(version));
+  }
+  if (audio && musicButton) {
+    audio.loop = true;
+    audio.muted = visitorMuted;
+    audio.volume = 0;
+    musicButton.hidden = false;
+    updateMusicButton();
+    audio.addEventListener("playing", updateMusicButton);
+    audio.addEventListener("pause", updateMusicButton);
+    audio.addEventListener("error", () => playbackFailed(playbackVersion));
+    musicButton.addEventListener("click", () => {
+      if (!audio.paused && !audio.muted && !visitorMuted) {
+        saveMusicChoice(true);
+        playbackVersion += 1;
+        window.cancelAnimationFrame(fadeFrame);
+        audio.muted = true;
+        audio.pause();
+        updateMusicButton();
+      } else {
+        saveMusicChoice(false);
+        preparePlayback();
+        try { handlePlayback(audio.play(), playbackVersion); }
+        catch { playbackFailed(playbackVersion); }
+      }
+    });
+  }
+
+  // Si falta un elemento esencial, se conserva la carta HTML ya visible.
+  if (!opening || !seal || !letter || !letterInside || !paper || !heading || !status) return;
+
+  function showLetter(moveFocus = false) {
+    window.clearTimeout(phaseTimer);
+    phaseTimer = null;
+    body.dataset.state = "open";
+    letter.inert = false;
+    letter.removeAttribute("aria-hidden");
+    seal.setAttribute("aria-expanded", "true");
+    opening.hidden = true;
+    status.textContent = "Invitación abierta. Puedes desplazarte para leerla.";
+    if (moveFocus) heading.focus({ preventScroll: true });
+  }
+
+  function measureLetter() {
+    const rect = letterInside.getBoundingClientRect();
+    const scale = rect.width / paper.offsetWidth;
+    const left = rect.left - paper.offsetLeft * scale;
+    const top = rect.top - paper.offsetTop * scale;
+    const style = letter.style;
+    style.setProperty("--letter-x", `${left}px`);
+    style.setProperty("--letter-y", `${top}px`);
+    style.setProperty("--letter-lift-y", `${top - rect.height * 0.95}px`);
+    style.setProperty("--letter-scale", String(scale));
+    style.setProperty("--letter-start-height", `${paper.offsetTop + rect.height / scale}px`);
+  }
+
+  function openInvitation() {
+    if (body.dataset.state !== "closed") return;
+    // play() se llama en la misma pila del clic, antes de temporizadores o promesas.
+    if (audio && !visitorMuted) {
+      preparePlayback();
+      try { handlePlayback(audio.play(), playbackVersion); }
+      catch { playbackFailed(playbackVersion); }
+    }
+    if (reducedMotion.matches) {
+      showLetter(true);
+      return;
+    }
+
+    body.dataset.state = "opening";
+    seal.disabled = true;
+    status.textContent = "Abriendo la invitación…";
+
+    // La solapa termina sus 700 ms antes de iniciar los 900 ms de ascenso.
+    phaseTimer = window.setTimeout(() => {
+      measureLetter();
+      body.dataset.state = "lifting";
+      phaseTimer = window.setTimeout(() => showLetter(true), LETTER_MS);
+    }, FLAP_MS);
+  }
+
+  seal.addEventListener("click", openInvitation);
+
+  function onMotionPreferenceChange(event) {
+    if (event.matches && ["opening", "lifting"].includes(body.dataset.state)) showLetter(true);
+  }
+  if (typeof reducedMotion.addEventListener === "function") {
+    reducedMotion.addEventListener("change", onMotionPreferenceChange);
+  } else {
+    reducedMotion.addListener(onMotionPreferenceChange);
+  }
+
+  // Si el móvil cambia de orientación durante la apertura, se entrega la carta
+  // directamente para evitar mantener medidas antiguas que puedan recortarla.
+  window.addEventListener("resize", () => {
+    if (body.dataset.state === "opening" || body.dataset.state === "lifting") {
+      showLetter(true);
+    }
+  });
+
+  if (window.location.hash) {
+    showLetter();
+  } else {
+    body.dataset.state = "closed";
+    letter.inert = true;
+    letter.setAttribute("aria-hidden", "true");
+    opening.hidden = false;
+  }
+})();
