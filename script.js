@@ -163,9 +163,61 @@
     }, FLAP_MS);
   }
 
-  // Copiar la cuenta evita que nadie transcriba diez digitos a mano.
+  // --- Ventana con los datos de transferencia -----------------------------
+  const abrirCuenta = document.getElementById("abrir-cuenta");
+  const modal = document.getElementById("modal-cuenta");
   const botonCopia = document.getElementById("copiar-cuenta");
   const estadoCopia = document.getElementById("estado-copia");
+
+  if (abrirCuenta && modal) {
+    let ultimoFoco = null;
+
+    function focoables() {
+      return [...modal.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])")]
+        .filter((el) => el.offsetParent !== null);
+    }
+
+    function abrir() {
+      // Guardamos quien abrio, pero el retorno se ancla al propio disparador:
+      // si la apertura no vino de un clic que enfoque, activeElement es <body>
+      // y el foco se perderia al cerrar.
+      ultimoFoco = document.activeElement === body ? abrirCuenta : document.activeElement;
+      modal.hidden = false;
+      body.dataset.modal = "abierto";
+      abrirCuenta.setAttribute("aria-expanded", "true");
+      // Enfocar la caja, no el boton de cerrar: lo primero que se resalta no
+      // debe ser la salida.
+      const caja = modal.querySelector(".modal-caja");
+      if (caja) caja.focus();
+    }
+
+    function cerrar() {
+      modal.hidden = true;
+      delete body.dataset.modal;
+      abrirCuenta.setAttribute("aria-expanded", "false");
+      // Devolver el foco donde estaba: quien navega con teclado no se pierde.
+      const destino = (ultimoFoco && typeof ultimoFoco.focus === "function") ? ultimoFoco : abrirCuenta;
+      destino.focus();
+    }
+
+    abrirCuenta.setAttribute("aria-expanded", "false");
+    abrirCuenta.addEventListener("click", abrir);
+    modal.querySelectorAll("[data-cerrar-modal]").forEach((el) => el.addEventListener("click", cerrar));
+
+    document.addEventListener("keydown", (e) => {
+      if (modal.hidden) return;
+      if (e.key === "Escape") { cerrar(); return; }
+      if (e.key !== "Tab") return;
+      // Atrapar el tabulador dentro de la ventana mientras este abierta.
+      const f = focoables();
+      if (!f.length) return;
+      const primero = f[0], ultimo = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+    });
+  }
+
+  // Copiar la cuenta evita que nadie transcriba diez digitos a mano.
   if (botonCopia) {
     const etiqueta = botonCopia.querySelector(".copiar-texto");
     const original = etiqueta.textContent;
@@ -177,7 +229,7 @@
         await navigator.clipboard.writeText(numero);
         bien = true;
       } catch {
-        // Sin permiso de portapapeles: seleccionamos el numero para copiarlo a mano.
+        // Sin portapapeles (o sin contexto seguro): seleccionamos el numero.
         const nodo = document.getElementById("numero-cuenta");
         if (nodo) {
           const rango = document.createRange();

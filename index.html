@@ -224,22 +224,13 @@
         <section class="letter-section seccion-practica" aria-labelledby="regalos">
           <h2 id="regalos">Mesa de regalos</h2>
           <p>Que vengas ya nos alcanza. Si aun así quieres tener un detalle con nosotros, aquí te dejamos los datos.</p>
-          <div class="cuenta">
-            <p class="cuenta-banco">Banco de Loja</p>
-            <dl class="cuenta-datos">
-              <dt>Titular</dt><dd>José Luis Encarnación</dd>
-              <dt>Cuenta</dt><dd><span id="numero-cuenta">2901610031</span></dd>
-              <dt>Cédula</dt><dd>1104434491</dd>
-            </dl>
-          </div>
-          <button class="button" id="copiar-cuenta" type="button" data-cuenta="2901610031">
-            <svg class="icon-copy" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <rect x="5.5" y="5.5" width="8" height="8" rx="1.4" />
-              <path d="M10.5 3.5v-1a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1" />
+          <button class="button" id="abrir-cuenta" type="button" aria-haspopup="dialog">
+            <svg class="icon-sobre" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <rect x="1.4" y="3.4" width="13.2" height="9.2" rx="1.2" />
+              <path d="M1.8 4.4 8 8.9l6.2-4.5" />
             </svg>
-            <span class="copiar-texto">Copiar número de cuenta</span>
+            <span>Ver datos para transferir</span>
           </button>
-          <p class="sr-only" id="estado-copia" role="status" aria-live="polite"></p>
         </section>
 
         <hr class="beat" aria-hidden="true">
@@ -275,6 +266,32 @@
       </div>
     </article>
   </main>
+  <div class="modal" id="modal-cuenta" hidden>
+    <div class="modal-fondo" data-cerrar-modal></div>
+    <div class="modal-caja" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="modal-titulo" aria-describedby="modal-nota">
+      <span class="modal-flor flor-arriba" aria-hidden="true"></span>
+      <span class="modal-flor flor-abajo" aria-hidden="true"></span>
+      <button class="modal-cerrar" type="button" aria-label="Cerrar" data-cerrar-modal>
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 4 8 8M12 4l-8 8" /></svg>
+      </button>
+      <p class="modal-banco" id="modal-titulo">Banco de Loja</p>
+      <div class="modal-regla" aria-hidden="true"></div>
+      <dl class="cuenta-datos">
+        <dt>Titular</dt><dd>José Luis Encarnación</dd>
+        <dt>Cuenta</dt><dd><span id="numero-cuenta">2901610031</span></dd>
+        <dt>Cédula</dt><dd>1104434491</dd>
+      </dl>
+      <button class="button" id="copiar-cuenta" type="button" data-cuenta="2901610031">
+        <svg class="icon-copy" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <rect x="5.5" y="5.5" width="8" height="8" rx="1.4" />
+          <path d="M10.5 3.5v-1a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1" />
+        </svg>
+        <span class="copiar-texto">Copiar número de cuenta</span>
+      </button>
+      <p class="action-note" id="modal-nota">Gracias por pensarlo.</p>
+    </div>
+  </div>
+  <p class="sr-only" id="estado-copia" role="status" aria-live="polite"></p>
   <audio id="musica" src="mp3/musica.mp3" preload="none" loop
     aria-label="Caminar De Tu Mano, Rio Roma featuring Fonseca"></audio>
   <button class="music-toggle" id="musica-toggle" type="button" aria-label="Activar música" aria-pressed="false"
