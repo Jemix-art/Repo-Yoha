@@ -117,6 +117,59 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; }
   animation: envelope-float 5.5s ease-in-out infinite;
   filter: drop-shadow(0 20px 22px #411a2b26);
 }
+/* --- Detalle del sobre ---------------------------------------------------
+   Grano de papel, filo dorado en el pliegue y dos ramitas de olivo dibujadas
+   a mano flanqueando la escena. El olivo va en un solo tono: sobre el vino se
+   aclara por filtro, porque un dibujo a dos tintas pierde medio trazo. */
+.envelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: 4px;
+  pointer-events: none;
+  /* Grano: dos tramas finas cruzadas, como la fibra de un papel verjurado. */
+  background-image:
+    repeating-linear-gradient(8deg, #ffffff0a 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(98deg, #00000008 0 1px, transparent 1px 4px);
+  mix-blend-mode: overlay;
+}
+/* El pliegue de la solapa capta la luz: una linea fina lo define. */
+.envelope-flap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(-32deg, transparent 49.5%, #d9a94e42 50%, transparent 50.5%),
+    linear-gradient(32deg, transparent 49.5%, #d9a94e42 50%, transparent 50.5%);
+  pointer-events: none;
+}
+/* Luz ambiente detras del sobre, para que no flote sobre un crema plano. */
+.opening::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(64% 42% at 50% 44%, #ffffff7a, transparent 70%),
+    radial-gradient(120% 78% at 50% 50%, transparent 52%, #7a5c4f1f 100%);
+}
+.olivo {
+  position: absolute;
+  z-index: 2;
+  width: clamp(52px, 15vw, 82px);
+  aspect-ratio: 120 / 170;
+  background: url("img/generados/olivo.svg") center / contain no-repeat;
+  opacity: .34;
+  pointer-events: none;
+  transition: transform 900ms var(--ease), opacity 700ms ease;
+}
+/* En las esquinas de abajo: hay sitio de sobra y no tocan el sobre. */
+.olivo-izq { left: 5%; bottom: 5%; transform: rotate(-13deg); }
+.olivo-der { right: 5%; bottom: 5%; transform: rotate(13deg) scaleX(-1); }
+body[data-state="opening"] .olivo,
+body[data-state="lifting"] .olivo { opacity: 0; transform: scale(.9) rotate(-26deg); }
 .envelope-back {
   position: absolute;
   inset: 0;
